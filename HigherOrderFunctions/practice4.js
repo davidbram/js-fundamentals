@@ -5,7 +5,9 @@ const mapper = {
 }
 
 function swap(mac, mapper) { 
-    return mac.split("").map(m => mapper.hasOwnProperty(m) ? mapper[m] : m).join("");
+  return mac.split("").map(m => typeof(mapper[m]) === "undefined" ? m : mapper[m]).join("");
 }
 
 console.log(swap(mac, mapper));
+
+// find out why it doesn't work
