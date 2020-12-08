@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>Javascript Closures</h3>
+    <p>Counting with a local variable</p>
+    <button onclick="incrementCounter()">Count</button>
+    <p id="count">0</p>
+</body>
+<script>
+    var counter = 0;
+    var add = (function() {
+        var counter = 0;
+        return function(){ counter += 1; return counter;}
+    })();
+
+    
+    function incrementCounter(){
+        document.getElementById("count").innerHTML = add();
+    }
+</script>
+</html>
