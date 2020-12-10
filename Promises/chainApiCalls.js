@@ -17,9 +17,9 @@ const urls = [
    {type: 'Starship', endpoint: 'starships'}
 ];
 
-async function apiCall(url){
+async function apiCall(url, id = '1'){
     return(new Promise((resolve, reject) => {
-        const fullUrl = urlJoin(apiUrl, url.endpoint,'1');
+        const fullUrl = urlJoin(apiUrl, url.endpoint, id);
         axios.get(fullUrl).then((res) => 
         {
             let disp = `${url.type} name is ${res.data.name ?? res.data.title}`;
@@ -27,7 +27,8 @@ async function apiCall(url){
             console.log(disp);
             resolve("Done!");
         }).catch((err) => console.log(err));
-}))};
+}))
+};
 
 const promises = [
     apiCall(urls[0]),
