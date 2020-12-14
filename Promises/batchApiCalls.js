@@ -7,18 +7,18 @@ const urlJoin = require('url-join');
 
 let calls = [];
 
-let url = "https://swapi.dev/api/people";
+let url = "https://swapi.dev/api/species";
 
 async function apiCall(id = '1'){
     return(new Promise((resolve, reject) => {
         const fullUrl = urlJoin(url, String(id));
         axios.get(fullUrl).then((res) => 
         {
-            let disp = `Person name is ${res.data.name}`;
+            let disp = `Person name is ${res?.data?.name}`;
             calls.push(disp);
             // console.log(disp);
             resolve("Done!");
-        }).catch((err) => console.log(err => console.log(err)));
+        }).catch((err) => console.log(err => console.log(`Error is: ${err}`)));
 }))
 };
 
@@ -39,7 +39,7 @@ async function batchCall(size) {
             console.log("5 api calls complete.");
             calls = [];
             size += 5;
-        }).catch(err => console.log(err => console.log(err)))
+        }).catch(err => console.log(err => console.log(`Error is ${err}`)))
 
     }
 }
