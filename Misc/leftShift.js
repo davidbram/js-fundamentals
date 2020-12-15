@@ -14,3 +14,4 @@ let arr = [3, 1, 2];
 let arr1 = shiftLeft(arr);
 let arr2 = shiftLeft(arr1);
 console.log(arr2);
+const arr1 = {};

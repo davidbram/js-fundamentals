@@ -7,7 +7,7 @@ let ladder = {
         this.step++;
         return this;
     },
-    down() {
+    down: () => { //run
         this.step--;
         return this;
     },
