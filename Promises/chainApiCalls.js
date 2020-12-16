@@ -26,10 +26,10 @@ function apiCall(url, id = "1") {
         let disp = `${url.type} name is ${res.data.name ?? res.data.title}`;
         calls.push(disp);
         console.log(disp);
-        resolve("Done!");
-        console.log("after Done");
+        resolve("All Completed!");
+        //console.log("after Done");
       })
-      .catch((err) => console.log(err));
+      .catch(err => reject(err));
   });
 }
 
@@ -40,24 +40,48 @@ const promises = [
   apiCall(urls[3]),
 ];
 
+function check4ApiCallsComplete(res) {
+  console.log(res[0]);
+  const starshipUrl = urls[4];
+  const fullUrl = urlJoin(apiUrl, starshipUrl.endpoint, "2");
+  return new Promise(resolve => resolve(fullUrl))
+}
+
+function apiCall5(res) {
+  console.log(`\n4 api calls complete. 5th api call is Starship name: ${res.data.name}`);
+  return new Promise(resolve => resolve(calls.join(". ")));
+}
+
+function getConcatenatedRes(res) {
+  console.log(res);
+  console.log("\nAll api calls completed");
+}
+
 Promise.all(promises).then(
-  function (result) {
-    const starshipUrl = urls[4];
-    const fullUrl = urlJoin(apiUrl, starshipUrl.endpoint, "2");
-    axios
-      .get(fullUrl)
-      .then((res) => {
-        console.log(
-          `\n4 api calls complete. 5th api call is ${starshipUrl.type} name: ${res.data.name}`
-        );
-        console.log("\nConcatenated response: " + calls.join(". "));
-        console.log("\nAll api calls completed");
-      })
-      .catch((err) => console.log(err));
-  },
-  function (err) {
-    console.log(err);
-  }
-);
+  result => check4ApiCallsComplete(result)
+)
+.then(url => axios.get(url))
+.then(res => apiCall5(res))
+.then(res => getConcatenatedRes(res))
+.catch(err => console.log(err));
 
 // Read about promises and async and await. Promise chaining
+
+
+
+// old code
+
+  // result => {
+  //   const starshipUrl = urls[4];
+  //   const fullUrl = urlJoin(apiUrl, starshipUrl.endpoint, "2");
+  //   axios
+  //     .get(fullUrl)
+  //     .then(res => {
+  //       console.log(
+  //         `\n4 api calls complete. 5th api call is ${starshipUrl.type} name: ${res.data.name}`
+  //       );
+  //       console.log("\nConcatenated response: " + calls.join(". "));
+  //       console.log("\nAll api calls completed");
+  //     })
+  //     .catch((err) => console.log(err));
+  // },
