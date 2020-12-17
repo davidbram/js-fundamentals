@@ -12,7 +12,7 @@ let ladder = {
         return this;
     },
     showStep: function() {
-        alert( this.step );
+        console.log( this.step );
     }
 };
 

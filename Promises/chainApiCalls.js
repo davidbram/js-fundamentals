@@ -5,7 +5,7 @@ const axios = require("axios");
 
 const urlJoin = require("url-join");
 
-let calls = [];
+// let calls = [];
 
 const apiUrl = "https://swapi.dev/api";
 
@@ -22,39 +22,34 @@ function apiCall(url, id = "1") {
     const fullUrl = urlJoin(apiUrl, url.endpoint, id);
     axios
       .get(fullUrl)
-      .then((res) => {
+      .then(res => {
         let disp = `${url.type} name is ${res.data.name ?? res.data.title}`;
-        calls.push(disp);
+        // calls.push(disp);
         console.log(disp);
-        resolve("All Completed!");
+        resolve(disp);
         //console.log("after Done");
       })
       .catch(err => reject(err));
   });
 }
 
-const promises = [
-  apiCall(urls[0]),
-  apiCall(urls[1]),
-  apiCall(urls[2]),
-  apiCall(urls[3]),
-];
+const promises = urls.slice(0,-1).map(url => apiCall(url));
 
 function check4ApiCallsComplete(res) {
-  console.log(res[0]);
-  const starshipUrl = urls[4];
-  const fullUrl = urlJoin(apiUrl, starshipUrl.endpoint, "2");
+  console.log(`Concatenated response: ${res.join(". ")}`);
+  const [lastUrl] = urls.slice(-1);
+  const fullUrl = urlJoin(apiUrl, lastUrl.endpoint, "2");
   return new Promise(resolve => resolve(fullUrl))
 }
 
 function apiCall5(res) {
-  console.log(`\n4 api calls complete. 5th api call is Starship name: ${res.data.name}`);
-  return new Promise(resolve => resolve(calls.join(". ")));
+  const [lastUrl] = urls.slice(-1);
+  console.log(`\n4 api calls complete. 5th api call is ${lastUrl.type} name: ${res.data.name}`);
+  return new Promise(resolve => resolve("\nAll api calls completed"));
 }
 
-function getConcatenatedRes(res) {
+function allCallsComplete(res) {
   console.log(res);
-  console.log("\nAll api calls completed");
 }
 
 Promise.all(promises).then(
@@ -62,7 +57,7 @@ Promise.all(promises).then(
 )
 .then(url => axios.get(url))
 .then(res => apiCall5(res))
-.then(res => getConcatenatedRes(res))
+.then(res => allCallsComplete(res))
 .catch(err => console.log(err));
 
 // Read about promises and async and await. Promise chaining
