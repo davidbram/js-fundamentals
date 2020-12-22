@@ -5,26 +5,29 @@
 
 const driverObject = require("./drivers.json");
 
-function getFamilynameBritishDrivers(obj) {
-    return obj.filter(driver => driver["Nationality"] === "British").map(driver => driver["FamilyName"]);
-}
+let getFamilynameBritishDrivers = (obj) => {
+  return obj
+    .filter(driver => driver.Nationality === "British")
+    .map(driver => driver.FamilyName);
+};
 
-function totalDriverAge(obj) {
-    return obj.reduce((sum, driver) => sum +driver["Age"], 0);
-}
+let totalDriverAge = (obj) => {
+  return obj.reduce((sum, driver) => sum + driver.Age, 0);
+};
 
-
-function getDriverObject(obj) {
-    newObj = {}
-    obj.forEach(driver => {
-        newObj[driver["FamilyName"].slice(0,3).toUpperCase()] = `${driver["GivenName"]} ${driver["FamilyName"]}`;
-    });
+let getDriverObject = (obj) => {
+  //const newObj = {};
+  return obj.reduce((newObj, driver) => {
+    newObj[
+      driver.FamilyName.slice(0, 3).toUpperCase()
+    ] = `${driver.GivenName} ${driver.FamilyName}`;
     return newObj;
-}
+  }, {});
+
+};
 
 // console.log(getFamilynameBritishDrivers(driverObject));
 
 // console.log(totalDriverAge(driverObject));
 
 console.log(getDriverObject(driverObject));
-

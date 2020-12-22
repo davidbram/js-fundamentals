@@ -1,22 +1,23 @@
 const numbers = [1, 2];
 
-function getNumbers() {
+const getNumbers = (temp) => {
   setTimeout(() => {
+    console.log(temp);
     console.log(numbers);
   }, 1000);
 }
 
-function addNumber(number, callback) {
+const addNumber = (number, callback) => {
   setTimeout(() => {
     numbers.push(number);
-    callback();
+    callback("String2");
   }, 2000);
 }
 
-function main() {
-  getNumbers();
+const main = () => {
+  getNumbers("String");
   addNumber(3, getNumbers);
-//   getNumbers();
+  getNumbers();
 }
 
 main();

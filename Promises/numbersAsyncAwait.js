@@ -1,20 +1,20 @@
 const numbers = [1, 2];
 
-function getNumbers() {
+const getNumbers = () => {
   setTimeout(() => {
     console.log(numbers);
     return Promise.resolve();
   }, 1000)
 }
 
-async function addNumber(number) {
+const addNumber = async (number) => {
   return new Promise(resolve => setTimeout(() => {
     numbers.push(number);
     resolve();
   }, 2000));
 }
 
-async function main() {
+const main = async () => {
   getNumbers();
   await addNumber(3);
   getNumbers();
