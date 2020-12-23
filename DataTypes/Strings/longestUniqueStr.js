@@ -12,11 +12,12 @@ let solution = (A) => {
             }
         }).filter(el => el !== undefined));
 
-        concatArr = concatArr.reduce((acc, val, ind, arr),[]);
         arr = A.slice();
     }
     return concatArr;
 }
+
+let getConcatArr = (arr, i) { }
 
 let isRepeatedChar = (str) => {
     for(let i of str) {
